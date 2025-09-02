@@ -277,7 +277,7 @@ Pour utilisation commerciale de la méthodologie GENIA, contactez : **hemerson.k
 **Hemerson KOFFI**  
 - 🧠 **Créateur de la méthodologie pédagogique GENIA** 
 - 🎓 **Passionné d'IA générative** et de pédagogie innovante
-- 📚 **Chercheur autodidacte** : étude approfondie des formations Stanford, MIT, DeepLearning.ai
+- 📚 **Chercheur autodidacte** : étude approfondie des formations Stanford, MIT, Google,  DeepLearning.ai
 - 🚀 **Vision** : Démocratiser l'IA générative par une pédagogie adaptée au marché francophone
 - ⚡ **Innovation** : Premier assistant pédagogique IA contextuel français
 - 🌐 LinkedIn : [Suivez #GENIATraining](https://linkedin.com/in/hemersonkoffi)
