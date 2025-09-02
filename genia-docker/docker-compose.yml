@@ -1,0 +1,216 @@
+version: '3.8'
+
+services:
+  # Base de données PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: genia_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: genia
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_SHARED_BUFFERS: ${POSTGRES_SHARED_BUFFERS:-256MB}
+      POSTGRES_EFFECTIVE_CACHE_SIZE: ${POSTGRES_EFFECTIVE_CACHE_SIZE:-1GB}
+      POSTGRES_MAX_CONNECTIONS: ${POSTGRES_MAX_CONNECTIONS:-100}
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "5432:5432"
+    networks:
+      - genia_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    command: >
+      postgres
+      -c shared_buffers=${POSTGRES_SHARED_BUFFERS:-256MB}
+      -c effective_cache_size=${POSTGRES_EFFECTIVE_CACHE_SIZE:-1GB}
+      -c max_connections=${POSTGRES_MAX_CONNECTIONS:-100}
+      -c work_mem=64MB
+
+  # Redis pour cache et sessions
+  redis:
+    image: redis:7-alpine
+    container_name: genia_redis
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD} --maxmemory 2gb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - genia_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Application GENIA
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+      target: production
+    container_name: genia_app
+    restart: unless-stopped
+    environment:
+      # Base de données
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/genia
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
+      
+      # APIs externes
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      MISTRAL_API_KEY: ${MISTRAL_API_KEY}
+      
+      # LLM local (si configuré)
+      LOCAL_LLM_URL: http://llm-api:8000
+      
+      # Next.js
+      NEXT_PUBLIC_BASE_URL: ${BASE_URL:-http://localhost}
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: "0.0.0.0"
+    volumes:
+      - app_uploads:/app/uploads
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - genia_network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # LLM API local (Ollama + vLLM) - Optionnel pour serveur avec GPU
+  llm-api:
+    build:
+      context: ./llm-api
+      dockerfile: Dockerfile
+    container_name: genia_llm_api
+    restart: unless-stopped
+    profiles:
+      - llm  # Use: docker-compose --profile llm up
+    environment:
+      CUDA_VISIBLE_DEVICES: "0,1,2,3"  # RTX 4090 + 3090
+      MODEL_PATH: /models
+      MAX_MEMORY_USAGE: "40GB"  # Ajuster selon RAM disponible
+    volumes:
+      - llm_models:/models
+      - ./llm-api/config:/app/config
+    ports:
+      - "8000:8000"   # vLLM API
+      - "11434:11434" # Ollama API
+    networks:
+      - genia_network
+    deploy:
+      resources:
+        limits:
+          memory: 100GB
+        reservations:
+          memory: 40GB
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+      start_period: 120s
+
+  # NGINX Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: genia_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/ssl/certs:ro
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      - app
+    networks:
+      - genia_network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Monitoring (optionnel)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: genia_prometheus
+    restart: unless-stopped
+    profiles:
+      - monitoring  # Use: docker-compose --profile monitoring up
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - genia_network
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: genia_grafana
+    restart: unless-stopped
+    profiles:
+      - monitoring  # Use: docker-compose --profile monitoring up
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
+      GF_USERS_ALLOW_SIGN_UP: false
+      GF_INSTALL_PLUGINS: "grafana-piechart-panel"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana-dashboards:/etc/grafana/provisioning/dashboards:ro
+    networks:
+      - genia_network
+    depends_on:
+      - prometheus
+
+volumes:
+  redis_data:
+    driver: local
+  app_uploads:
+    driver: local
+  llm_models:
+    driver: local
+  nginx_logs:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+networks:
+  genia_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
