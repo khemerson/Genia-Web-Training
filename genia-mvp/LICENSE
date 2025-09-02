@@ -1,0 +1,27 @@
+GENIA-MVP - Référence de Licence
+=================================
+
+Ce sous-projet "genia-mvp" fait partie du projet "Genia Web Training"
+et est soumis à la même licence hybride que le projet parent.
+
+📄 LICENCE COMPLÈTE : Voir ../LICENSE dans le répertoire racine
+
+## Résumé pour GENIA-MVP :
+
+### Code Technique (src/, pages/, components/, etc.)
+- **Licence :** Apache License 2.0
+- **Usage :** Libre utilisation, modification, distribution
+- **Attribution :** Recommandée mais non obligatoire
+
+### Contenu Pédagogique (contenu des leçons, exercices, méthodologie)
+- **Licence :** Creative Commons BY-NC-SA 4.0
+- **Usage :** Libre pour usage non-commercial avec attribution obligatoire
+- **Attribution requise :** "Méthode pédagogique GENIA créée par Hemerson KOFFI"
+
+### Usage Commercial
+Pour toute utilisation commerciale du contenu pédagogique ou de la méthode GENIA,
+une autorisation expresse est requise.
+
+---
+Copyright (c) 2024 Hemerson KOFFI - GENIA Web Training
+Référence complète de licence : ../LICENSE

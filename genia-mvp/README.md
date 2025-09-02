@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GENIA-MVP 
+## Plateforme de Formation IA Générative - Version MVP
 
-## Getting Started
+Application **Next.js** implémentant la méthodologie pédagogique **GENIA** d'Hemerson KOFFI pour l'apprentissage de l'IA générative.
 
-First, run the development server:
+## 🚀 Fonctionnalités
 
+- **🎓 Formation Progressive** : Parcours adaptatif en 3 modules
+- **🤖 Assistant IA** : Chat intelligent contextuel avec fallback multi-providers
+- **📱 PWA** : Installation native et mode hors ligne  
+- **⚡ Temps Réel** : Streaming des réponses IA
+- **🎯 Évaluation Intelligente** : Scoring automatique par IA
+
+## 🛠️ Développement
+
+### Prérequis
+- Node.js 18+
+- npm/yarn/pnpm
+
+### Installation
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local  # Configurez vos clés API
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Démarrage
+```bash
+npm run dev
+# ou
+yarn dev
+# ou  
+pnpm dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔧 Technologies
 
-## Learn More
+- **Next.js 15.5.2** avec Turbopack
+- **React 19** + TypeScript
+- **TailwindCSS v4** 
+- **APIs IA** : Mistral + OpenAI + Anthropic
+- **PWA** avec service workers
 
-To learn more about Next.js, take a look at the following resources:
+## 📄 Licence
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Licence hybride (voir `LICENSE`) :
+- Code technique : Apache 2.0
+- Contenu pédagogique : CC BY-NC-SA 4.0
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Créé par Hemerson KOFFI** - Méthodologie pédagogique GENIA

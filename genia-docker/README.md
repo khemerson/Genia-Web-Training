@@ -399,6 +399,17 @@ docker-compose up -d --build
 
 ---
 
+## 📄 Licence
+
+Ce projet utilise une **licence hybride** (voir `LICENSE`) :
+- **🔧 Infrastructure & Code** : Apache License 2.0 (libre usage)
+- **📚 Contenu Pédagogique** : Creative Commons BY-NC-SA 4.0 (attribution requise)
+- **🧠 Méthode GENIA** : Propriété intellectuelle d'Hemerson KOFFI
+
+Pour usage commercial de la méthodologie, autorisation expresse requise.
+
+---
+
 **🎉 GENIA Docker est maintenant prêt pour la production !**
 
 Votre infrastructure complète est déployée avec :
@@ -410,3 +421,5 @@ Votre infrastructure complète est déployée avec :
 - ✅ Monitoring Prometheus/Grafana
 - ✅ Backups automatiques
 - ✅ Scripts de déploiement
+
+**Créé par Hemerson KOFFI** - Méthodologie pédagogique GENIA

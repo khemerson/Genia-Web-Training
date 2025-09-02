@@ -1,0 +1,34 @@
+GENIA-Docker - Référence de Licence  
+====================================
+
+Ce sous-projet "genia-docker" fait partie du projet "Genia Web Training"
+et est soumis à la même licence hybride que le projet parent.
+
+📄 LICENCE COMPLÈTE : Voir ../LICENSE dans le répertoire racine
+
+## Résumé pour GENIA-Docker :
+
+### Infrastructure & Configuration (Docker, scripts, nginx, etc.)
+- **Licence :** Apache License 2.0
+- **Usage :** Libre utilisation, modification, distribution
+- **Attribution :** Recommandée mais non obligatoire
+
+### Application Web (app/)
+- **Code Technique :** Apache License 2.0
+- **Contenu Pédagogique :** Creative Commons BY-NC-SA 4.0
+
+### Services & APIs (llm-api/, monitoring/, etc.)
+- **Licence :** Apache License 2.0
+- **Usage :** Libre utilisation pour infrastructure technique
+
+### Documentation & Guides de Déploiement
+- **Licence :** Creative Commons BY-SA 4.0
+- **Attribution requise :** "GENIA Web Training - Hemerson KOFFI"
+
+### Usage Commercial
+Pour toute utilisation commerciale du contenu pédagogique ou de la méthode GENIA,
+une autorisation expresse est requise.
+
+---
+Copyright (c) 2024 Hemerson KOFFI - GENIA Web Training  
+Référence complète de licence : ../LICENSE

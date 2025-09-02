@@ -1,0 +1,64 @@
+GENIA Web Training - Licence Hybride
+=====================================
+
+Ce projet "Genia Web Training" combine code technique et contenu pédagogique sous licences différentes :
+
+## 1. CODE TECHNIQUE (Infrastructure, Applications, API)
+Licence: Apache License 2.0
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+## 2. CONTENU PÉDAGOGIQUE (Méthode GENIA, Modules, Exercices)
+Licence: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+
+Le contenu pédagogique, incluant la méthodologie GENIA développée par Hemerson KOFFI,
+est distribué sous licence Creative Commons BY-NC-SA 4.0.
+
+Attribution requise : "Méthode pédagogique GENIA créée par Hemerson KOFFI"
+
+Vous êtes autorisé à :
+- Partager : copier et redistribuer le contenu
+- Adapter : remixer, transformer et créer à partir du contenu
+
+Selon les conditions suivantes :
+- Attribution : Vous devez créditer Hemerson KOFFI comme créateur de la méthode GENIA
+- Non Commercial : Vous ne pouvez pas utiliser ce contenu à des fins commerciales
+- Partage dans les mêmes conditions : Les créations dérivées doivent utiliser la même licence
+
+Plus d'informations : https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+## 3. PROPRIÉTÉ INTELLECTUELLE SPÉCIFIQUE
+
+### Méthode GENIA
+La méthodologie pédagogique "GENIA" (Guide-Exemples-Niveau-Interaction-Assessment) 
+est la propriété intellectuelle d'Hemerson KOFFI. Toute utilisation commerciale 
+de cette méthodologie nécessite une autorisation expresse.
+
+### Marques
+"GENIA", "Genia Web Training", et les logos associés sont des marques déposées.
+
+## 4. CONTRIBUTIONS
+
+Les contributions au code technique sont encouragées sous licence Apache 2.0.
+Les contributions au contenu pédagogique doivent respecter l'esprit de la méthode GENIA
+et seront évaluées par l'équipe pédagogique.
+
+## 5. CONTACT POUR USAGE COMMERCIAL
+
+Pour toute utilisation commerciale du contenu pédagogique ou de la méthode GENIA,
+veuillez contacter : [contact@genia-training.com]
+
+---
+
+Copyright (c) 2024 Hemerson KOFFI - Méthode Pédagogique GENIA
+Code technique sous Apache 2.0, Contenu pédagogique sous CC BY-NC-SA 4.0
