@@ -121,11 +121,13 @@ if [[ ! -f .env ]]; then
     REDIS_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
     JWT_SECRET=$(openssl rand -base64 64 | tr -d "=+/" | cut -c1-50)
     ENCRYPTION_KEY=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-32)
+    GRAFANA_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
     
     # Replace placeholders in .env
     sed -i "s/your_secure_postgres_password_here/$POSTGRES_PASSWORD/g" .env
     sed -i "s/your_secure_redis_password_here/$REDIS_PASSWORD/g" .env
     sed -i "s/your_very_long_random_jwt_secret_here/$JWT_SECRET/g" .env
+    sed -i "s/your_secure_grafana_password_here/$GRAFANA_PASSWORD/g" .env
     sed -i "s/your_32_character_encryption_key_here/$ENCRYPTION_KEY/g" .env
     
     log_success "Environment file created with secure passwords"
@@ -360,7 +362,7 @@ echo "3. Wait 2-3 minutes for services to initialize"
 echo ""
 echo "4. Access your application:"
 echo "   🌐 App: http://localhost"
-echo "   📊 Grafana: http://localhost:3001 (admin/admin123)"
+echo "   📊 Grafana: http://localhost:3001 (admin / GRAFANA_PASSWORD in .env)"
 echo "   🔍 Prometheus: http://localhost:9090"
 echo ""
 echo "🔧 Useful commands:"

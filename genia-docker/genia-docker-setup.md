@@ -638,7 +638,7 @@ MISTRAL_API_KEY=your_mistral_key_here
 
 # App
 BASE_URL=http://localhost
-GRAFANA_PASSWORD=admin123
+GRAFANA_PASSWORD=$(openssl rand -base64 32)
 
 # Performance tuning for your hardware
 POSTGRES_SHARED_BUFFERS=8GB

@@ -307,7 +307,7 @@ case "${1:-deploy}" in
             log_success "🎉 Deployment completed successfully!"
             echo ""
             echo "🌐 Your GENIA application is now available at: http://localhost"
-            echo "📊 Monitoring dashboard: http://localhost:3001 (admin/admin123)"
+            echo "📊 Monitoring dashboard: http://localhost:3001 (admin / GRAFANA_PASSWORD in .env)"
         else
             log_error "Deployment verification failed"
             read -p "Do you want to rollback? (y/N): " -n 1 -r

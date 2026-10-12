@@ -635,7 +635,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     # Vérifier Grafana
     if curl -f -s http://localhost:3001/login > /dev/null; then
         echo "✅ Grafana accessible sur http://localhost:3001"
-        echo "   Login: admin / admin123"
+        echo "   Login: admin / GRAFANA_PASSWORD (.env)"
     fi
     
     # Vérifier Prometheus
@@ -966,7 +966,7 @@ echo "  📱 Application: $BASE_URL"
 echo "  🔍 Health Check: $BASE_URL/api/health"
 
 if docker-compose ps | grep -q grafana; then
-    echo "  📊 Grafana: http://localhost:3001 (admin/admin123)"
+    echo "  📊 Grafana: http://localhost:3001 (admin / GRAFANA_PASSWORD dans .env)"
     echo "  📈 Prometheus: http://localhost:9090"
 fi
 

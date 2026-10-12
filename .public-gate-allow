@@ -1,0 +1,7 @@
+# Exceptions to ~/infra-backup-new/scripts/public-push-gate.sh (doctrine D-PUB).
+# Format: <checks> <path-glob> <regex> # <reason>   — a rule without a reason fails the gate.
+3,4 genia-docker/docker-compose.yml 172\.20\.0\.0/16 # Docker bridge subnet declared by this stack, not a host LAN
+3,4 genia-docker/nginx/nginx.conf 172\.20\.0\.0/16 # nginx only accepts traffic from the stack's Docker bridge
+6 * [:=]\s*["']?\$\( # value generated at run time by a command substitution, e.g. $(openssl rand ...)
+6 * [:=]\s*["']?\$\{?[A-Z_][A-Z0-9_]*\}?(["'\s]|$) # reference to an environment variable, not a literal value
+6 genia-docker/env.docker.template =your[-_][a-z0-9_-]+$ # template placeholder, replaced by scripts/setup.sh or by the operator

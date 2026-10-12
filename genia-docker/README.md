@@ -84,7 +84,7 @@ docker-compose up -d
 |---------|-----|-------------|
 | **Application** | http://localhost | Interface GENIA |
 | **Health Check** | http://localhost/api/health | Monitoring santé |
-| **Grafana** | http://localhost:3001 | Dashboards (admin/admin123) |
+| **Grafana** | http://localhost:3001 | Dashboards (admin / `GRAFANA_PASSWORD` du `.env`) |
 | **Prometheus** | http://localhost:9090 | Métriques |
 
 ### Commandes Essentielles
@@ -198,7 +198,7 @@ docker-compose restart nginx
 
 ### Grafana Dashboards
 
-Accès : http://localhost:3001 (admin/admin123)
+Accès : http://localhost:3001 (admin / `GRAFANA_PASSWORD` du `.env`)
 
 **Dashboards préconfigurés** :
 - Performance Application
