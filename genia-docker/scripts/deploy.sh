@@ -63,7 +63,7 @@ create_backup() {
     # Backup database
     if docker-compose ps postgres | grep -q "Up"; then
         log_info "Backing up PostgreSQL database..."
-        docker-compose exec -T postgres pg_dump -U \$(grep POSTGRES_USER .env | cut -d '=' -f2) genia > "$BACKUP_DIR/database_$TIMESTAMP.sql"
+        docker-compose exec -T postgres pg_dump -U "$(grep '^POSTGRES_USER=' .env | cut -d '=' -f2-)" genia > "$BACKUP_DIR/database_$TIMESTAMP.sql"
         log_success "Database backup created: $BACKUP_DIR/database_$TIMESTAMP.sql"
     fi
     
@@ -125,7 +125,7 @@ deploy_services() {
     log_info "🔍 Checking database connectivity..."
     local db_ready=false
     for i in {1..10}; do
-        if docker-compose exec -T postgres pg_isready -U \$(grep POSTGRES_USER .env | cut -d '=' -f2) &> /dev/null; then
+        if docker-compose exec -T postgres pg_isready -U "$(grep '^POSTGRES_USER=' .env | cut -d '=' -f2-)" &> /dev/null; then
             db_ready=true
             break
         fi
@@ -253,7 +253,7 @@ rollback() {
         sleep 30
         
         # Restore database
-        docker-compose exec -T postgres psql -U \$(grep POSTGRES_USER .env | cut -d '=' -f2) genia < "$latest_backup"
+        docker-compose exec -T postgres psql -U "$(grep '^POSTGRES_USER=' .env | cut -d '=' -f2-)" genia < "$latest_backup"
         
         # Start application
         docker-compose up -d app nginx
