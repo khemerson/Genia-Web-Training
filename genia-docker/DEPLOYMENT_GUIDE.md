@@ -222,16 +222,18 @@ echo "=== CONFIGURATION ENVIRONNEMENT ==="
 cp env.docker.template .env
 
 # Générer mots de passe sécurisés
-POSTGRES_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
-REDIS_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
-JWT_SECRET=$(openssl rand -base64 64 | tr -d "=+/" | cut -c1-50)
-ENCRYPTION_KEY=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-32)
+POSTGRES_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/\n" | cut -c1-25)
+REDIS_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/\n" | cut -c1-25)
+JWT_SECRET=$(openssl rand -base64 64 | tr -d "=+/\n" | cut -c1-50)
+ENCRYPTION_KEY=$(openssl rand -base64 32 | tr -d "=+/\n" | cut -c1-32)
+GRAFANA_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/\n" | cut -c1-25)
 
 # Remplacer dans .env
 sed -i "s/your_secure_postgres_password_here/$POSTGRES_PASSWORD/g" .env
 sed -i "s/your_secure_redis_password_here/$REDIS_PASSWORD/g" .env
 sed -i "s/your_very_long_random_jwt_secret_here/$JWT_SECRET/g" .env
 sed -i "s/your_32_character_encryption_key_here/$ENCRYPTION_KEY/g" .env
+sed -i "s/your_secure_grafana_password_here/$GRAFANA_PASSWORD/g" .env
 
 echo "✅ Mots de passe générés automatiquement"
 echo "⚠️  Sauvegardez ces informations:"
@@ -243,6 +245,7 @@ echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" > .env.backup
 echo "REDIS_PASSWORD=$REDIS_PASSWORD" >> .env.backup
 echo "JWT_SECRET=$JWT_SECRET" >> .env.backup
 echo "ENCRYPTION_KEY=$ENCRYPTION_KEY" >> .env.backup
+echo "GRAFANA_PASSWORD=$GRAFANA_PASSWORD" >> .env.backup
 chmod 600 .env.backup
 
 echo "✅ Backup des mots de passe: .env.backup"

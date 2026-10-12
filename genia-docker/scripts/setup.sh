@@ -117,11 +117,11 @@ if [[ ! -f .env ]]; then
     cp env.docker.template .env
     
     # Generate secure passwords
-    POSTGRES_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
-    REDIS_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
-    JWT_SECRET=$(openssl rand -base64 64 | tr -d "=+/" | cut -c1-50)
-    ENCRYPTION_KEY=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-32)
-    GRAFANA_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
+    POSTGRES_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/\n" | cut -c1-25)
+    REDIS_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/\n" | cut -c1-25)
+    JWT_SECRET=$(openssl rand -base64 64 | tr -d "=+/\n" | cut -c1-50)
+    ENCRYPTION_KEY=$(openssl rand -base64 32 | tr -d "=+/\n" | cut -c1-32)
+    GRAFANA_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/\n" | cut -c1-25)
     
     # Replace placeholders in .env
     sed -i "s/your_secure_postgres_password_here/$POSTGRES_PASSWORD/g" .env
